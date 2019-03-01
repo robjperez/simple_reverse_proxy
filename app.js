@@ -30,6 +30,7 @@ const otProxy = proxy({
 
 const app = express()
 const PORT = process.env.PORT || 3000;
-app.use(`/`, cors(), otProxy);
-app.listen(PORT, () => console.log(`Example app listening on port ${PORT}!`))
+app.use('/', cors(), otProxy);
+app.use('/proxy', cors(), otProxy);
+app.listen(PORT, () => console.log(`Reverse proxy started.`))
 process.once('SIGINT', () => { server.close(); });
