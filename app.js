@@ -3,12 +3,22 @@ const proxy = require('http-proxy-middleware');
 const cors = require('cors');
 
 const processUrl = (originalUrl) => {
-  const urlRegExp = new RegExp(`^/([a-zA-Z0-9:.-]+.(?:opentok.com|tokbox.com)[:0-9]*)/(.*)$`);
+  const urlRegExp = new RegExp(`^/([a-zA-Z0-9:.-]+.(?:opentok.com|tokbox.com|t|o)[:0-9]*)/(.*)$`);
   const matches = originalUrl.match(urlRegExp);
   if (!matches || matches.length < 3) {
     return 'https://tokbox.com';
   }
-  const returnUrl = `https://${matches[1]}/${matches[2]}`;
+
+  let domain = matches[1];
+  const splitter = matches[1].split(":");
+  if(domain.startsWith("h.t")) domain = "hlg.tokbox.com";
+  if(domain.startsWith("as.o")) domain = "api-standard.opentok.com";
+  if(domain.startsWith("c.o")) domain = "config.opentok.com";
+  if(splitter.length > 1) {
+    domain = domain + ":" + splitter[1];
+  }
+
+  const returnUrl = `https://${domain}/${matches[2]}`;
   console.log(`${originalUrl} -> ${returnUrl}`)
   return returnUrl;
 };
