@@ -11,6 +11,7 @@ const processUrl = (originalUrl) => {
 
   let domain = matches[1];
   const splitter = matches[1].split(":");
+  if(domain.startsWith("eh.t")) domain = "enterprise.hlg.tokbox.com";
   if(domain.startsWith("h.t")) domain = "hlg.tokbox.com";
   if(domain.startsWith("as.o")) domain = "api-standard.opentok.com";
   if(domain.startsWith("c.o")) domain = "config.opentok.com";
