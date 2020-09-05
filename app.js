@@ -1,6 +1,9 @@
 const express = require('express');
 const proxy = require('http-proxy-middleware');
 const cors = require('cors');
+const fs = require('fs');
+const path = require('path');
+const https = require('https');
 
 const processUrl = (originalUrl) => {
   const urlRegExp = new RegExp(`^/([a-zA-Z0-9:.-]+.(?:opentok.com|tokbox.com)[:0-9]*)/(.*)$`);
@@ -32,5 +35,16 @@ const app = express()
 const PORT = process.env.PORT || 3000;
 app.use('/', cors(), otProxy);
 app.use('/proxy', cors(), otProxy);
-const server = app.listen(PORT, () => console.log(`Reverse proxy started.`))
-process.once('SIGINT', () => { server.close(); });
+//const server = app.listen(PORT, () => console.log(`Reverse proxy started.`))
+//process.once('SIGINT', () => { server.close(); });
+
+const key = fs.readFileSync(path.join(__dirname, 'selfsigned.key'));
+const cert = fs.readFileSync(path.join(__dirname, 'selfsigned.crt'));
+const options = {
+  key: key,
+  cert: cert
+};
+const httpsServer = https.createServer(options, app);
+httpsServer.listen(PORT, () => console.log(`Reverse proxy started.`))
+process.once('SIGINT', () => { httpsServer.close(); });
+
