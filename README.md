@@ -4,7 +4,7 @@ This proxy will forward all requests to it to opentok.com or tokbox.com
 
 If you do a request to `https://PROXY_IP_ADDRESS/tokbox.com/foo/bar?a=b`, It will forward it to `https://tokbox.com/foo/bar?a=b`
 
-By default, uses cerfificate and key in selfsigned.key selfsigned.crt files
+By default, uses key and cerfificate from selfsigned.key and selfsigned.crt files
 
 ## Running
 
