@@ -6,23 +6,30 @@ If you do a request to `https://PROXY_IP_ADDRESS/subdomain.tokbox.com/foo/bar?a=
 
 ## Running
 
-### Starting on HTTPS
-
-By default, uses key and cerfificate from selfsigned.key and selfsigned.crt files
+By default the server will start on http
 
 ```
 $ npm install
-$ npm start
+$ node app.js
 ```
 
-### Starting on HTTP
+### Using HTTPS
 
-```
-$ npm install
-$ npm run start-no-ssl
-```
+First, if you don't have already a key and a certificate you need to create one by running
 
-### Create self-signed certificates
 ```
 openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout ./selfsigned.key -out selfsigned.crt
 ```
+
+By default, uses key and cerfificate from selfsigned.key and selfsigned.crt files
+
+Then you can run:
+
+```
+USE_SSL=1; node app.js
+
+-- or --
+
+node app.js -use-ssl
+```
+

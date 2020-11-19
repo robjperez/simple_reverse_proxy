@@ -34,15 +34,14 @@ const otProxy = proxy({
 
 const app = express()
 const PORT = process.env.PORT || 3000;
-const no_ssl = (
-  process.argv.indexOf('-no-ssl') > -1? true : false
-);
+const USE_SSL = process.env.USE_SSL
+  || process.argv.indexOf('-use-ssl') > -1;
 
 app.use('/', cors(), otProxy);
 app.use('/proxy', cors(), otProxy);
 let server;
 
-if (no_ssl) {
+if (!USE_SSL) {
   console.log("Starting over HTTP");
   server = http.createServer(app);
 }
