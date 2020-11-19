@@ -6,9 +6,23 @@ If you do a request to `https://PROXY_IP_ADDRESS/tokbox.com/foo/bar?a=b`, It wil
 
 ## Running
 
+### Starting on HTTPS
+
+By default, uses key and cerfificate from selfsigned.key and selfsigned.crt files
+
 ```
 $ npm install
 $ npm start
 ```
 
+### Starting on HTTP
 
+```
+$ npm install
+$ npm run start-no-ssl
+```
+
+### Create self-signed certificates
+```
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout ./selfsigned.key -out selfsigned.crt
+```
